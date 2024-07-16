@@ -11,12 +11,12 @@ namespace UI.Providers
     {
         string _BaseUrl = AppSettings.APIBaseAddress;
 
-        private async Task<HttpResponseWraper<T?>> GenerateHttpResponseWraper<T>(HttpResponseMessage httpResponse)
+        private async Task<T?> GenerateHttpResponseWraper<T>(HttpResponseMessage httpResponse)
         {
             if (!httpResponse.IsSuccessStatusCode)
             {
                 _HttpResponseExceptionHander.HandlerExceptionAsync(httpResponse);
-                return new HttpResponseWraper<T?>(default, false, httpResponse);
+                return default;
             }
             else
             {
@@ -31,9 +31,7 @@ namespace UI.Providers
                 response = JsonSerializer.Deserialize<T>(responseString,
                     new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
 
-                return new HttpResponseWraper<T?>(response,
-                    httpResponse.IsSuccessStatusCode,
-                    httpResponse);
+                return response;
             }
         }
 
@@ -42,24 +40,24 @@ namespace UI.Providers
             return new StringContent(JsonSerializer.Serialize(data), Encoding.UTF8, "application/json");
         }
 
-        public async Task<HttpResponseWraper<TResponse?>> Delete<TResponse>(string url)
+        public async Task<TResponse?> Delete<TResponse>(string url)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.DeleteAsync(_BaseUrl + url));
         }
 
-        public async Task<HttpResponseWraper<TResponse?>> Get<TResponse>(string url)
+        public async Task<TResponse?> Get<TResponse>(string url)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.GetAsync(_BaseUrl + url));
 
         }
 
-        public async Task<HttpResponseWraper<TResponse?>> Post<T, TResponse>(string url, T data)
+        public async Task<TResponse?> Post<T, TResponse>(string url, T data)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PostAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
 
         }
 
-        public async Task<HttpResponseWraper<TResponse?>> Put<T, TResponse>(string url, T data)
+        public async Task<TResponse?> Put<T, TResponse>(string url, T data)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PutAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
         }
