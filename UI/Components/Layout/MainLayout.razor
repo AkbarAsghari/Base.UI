@@ -5,7 +5,7 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    <MudRTLProvider RightToLeft="@AppSettings.RightToLeft">
+    <MudRTLProvider RightToLeft="AppSettings.RightToLeft">
         <CascadingAuthenticationState>
             <AppBar MenuOnClick="(()=>_NavMenu.DrawerToggle())" />
             <NavMenu @ref="_NavMenu" />
