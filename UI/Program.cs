@@ -14,7 +14,8 @@ namespace UI
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<HttpResponseExceptionHander>();
+            builder.Services.AddScoped<HttpResponseExceptionHander>();
+            builder.Services.AddHttpClient();
             builder.Services.AddScoped<IHttpServiceProvider, HttpServiceProvider>();
 
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
