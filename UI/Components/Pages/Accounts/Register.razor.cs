@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using UI.Interfaces.Providers;
 using UI.Interfaces.Repositories;
 
 namespace UI.Components.Pages.Accounts;
@@ -6,6 +7,7 @@ namespace UI.Components.Pages.Accounts;
 partial class Register
 {
     [Inject] IAccountRepository _AccountRepository { get; set; }
+    [Inject] IAuthenticationProvider _AuthenticationProvider { get; set; }
     [Inject] ISnackbar _Snachbar { get; set; }
 
     RegisterUserDTO _RegisterUserDTO = new();
@@ -30,7 +32,7 @@ partial class Register
 
         if (response != null)
         {
-
+            await _AuthenticationProvider.Login(response.Token);
         }
     }
 }
