@@ -6,12 +6,12 @@
             <MudText Typo="Typo.h3" Class="my-3">ثبت نام</MudText>
             <MudText>سلام</MudText>
             <MudText>لطفا ایمیل خود را وارد نمایید</MudText>
-            <MudForm Model="_RegisterUserDTO" @ref="_Form">
-                <MudTextField T="string" Placeholder="ایمیل" Variant="Variant.Outlined" Class="my-2 mud-ltr" Required RequiredError="این فیلد ضروری میباشد" @bind-Value="_RegisterUserDTO.Email"></MudTextField>
-                <MudTextField T="string" InputType="InputType.Password" Placeholder="رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" Required RequiredError="این فیلد ضروری میباشد" @bind-Value="_RegisterUserDTO.Password"></MudTextField>
-                <MudTextField T="string" InputType="InputType.Password" Placeholder="تکرار رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" Required RequiredError="این فیلد ضروری میباشد" @bind-Value="_RegisterUserDTO.ConfirmPassword"></MudTextField>
-                <MudButton Color="Color.Primary" OnClick="RegisterUser" Variant="Variant.Filled" FullWidth>ثبت نام</MudButton>
-            </MudForm>
+            <EditForm Model="_RegisterUserDTO" OnValidSubmit="RegisterUser">
+                <MudTextField T="string" Placeholder="ایمیل" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.Email" @bind-Value="_RegisterUserDTO.Email"></MudTextField>
+                <MudTextField T="string" InputType="InputType.Password" Placeholder="رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.Password" @bind-Value="_RegisterUserDTO.Password"></MudTextField>
+                <MudTextField T="string" InputType="InputType.Password" Placeholder="تکرار رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.ConfirmPassword" @bind-Value="_RegisterUserDTO.ConfirmPassword"></MudTextField>
+                <MudButton Color="Color.Primary" ButtonType="ButtonType.Submit" Variant="Variant.Filled" FullWidth>ثبت نام</MudButton>
+            </EditForm>
         </MudCard>
     </MudContainer>
 </MudStack>

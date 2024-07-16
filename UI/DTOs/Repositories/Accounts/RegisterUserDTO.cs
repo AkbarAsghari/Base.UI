@@ -4,11 +4,11 @@ namespace UI.DTOs.Repositories.Accounts
 {
     public class RegisterUserDTO
     {
-        [Required]
+        [Required(ErrorMessage = "وارد کردن رمز عبور ضروری میباشد")]
         public string Email { get; set; }
-        [Required]
+        [Required(ErrorMessage = "رمز عبور را وارد نمایید")]
         public string Password { get; set; }
-        [Required]
+        [Required(ErrorMessage = "تکرار رمز عبور را وارد نمایید")]
         public string ConfirmPassword { get; set; }
     }
 }

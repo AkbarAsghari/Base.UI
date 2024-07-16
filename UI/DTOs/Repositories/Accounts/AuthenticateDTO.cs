@@ -4,9 +4,9 @@ namespace UI.DTOs.Repositories.Accounts
 {
     public class AuthenticateDTO
     {
-        [Required]
+        [Required(ErrorMessage = "نام کاربری ضروری میباشد")]
         public string UsernameOrEmail { get; set; }
-        [Required]
+        [Required(ErrorMessage = "رمز عبور ضروری مییباشد")]
         public string Password { get; set; }
     }
 }

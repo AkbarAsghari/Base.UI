@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using UI.Interfaces.Providers;
 using UI.Interfaces.Repositories;
 
@@ -22,16 +23,8 @@ partial class Login
 
     AuthenticateDTO _AuthenticateDTO = new();
 
-    MudForm _Form;
     public async Task Authenticate()
     {
-        await _Form.Validate();
-
-        if (!_Form.IsValid)
-        {
-            return;
-        }
-
         var response = await _AccountRepository.AuthenticateAsync(_AuthenticateDTO);
 
         if (response != null)

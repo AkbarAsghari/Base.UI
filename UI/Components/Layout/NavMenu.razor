@@ -1,10 +1,13 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always" Elevation="2">
+        <MudDrawer @bind-Open="_drawerOpen" ClipMode="DrawerClipMode.Always">
             <MudNavMenu>
                 <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
                 <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
                 <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
+                <MudNavGroup Title="حساب کاربری" Icon="@Icons.Material.Filled.AccountBox">
+                    <MudNavLink Href="/Accounts/SignOut">خروج</MudNavLink>
+                </MudNavGroup>
             </MudNavMenu>
         </MudDrawer>
     </Authorized>

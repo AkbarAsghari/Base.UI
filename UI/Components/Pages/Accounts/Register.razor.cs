@@ -12,16 +12,8 @@ partial class Register
 
     RegisterUserDTO _RegisterUserDTO = new();
 
-    MudForm _Form;
     public async Task RegisterUser()
     {
-        await _Form.Validate();
-
-        if (!_Form.IsValid)
-        {
-            return;
-        }
-
         if (!_RegisterUserDTO.Password.Equals(_RegisterUserDTO.ConfirmPassword))
         {
             _Snachbar.Add("رمز عبور و تکرار رمز عبور برابر نیست", Severity.Warning);
