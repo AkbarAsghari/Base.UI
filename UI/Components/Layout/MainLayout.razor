@@ -1,11 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
 <MudThemeProvider Theme="@_theme" IsDarkMode="AppSettings.DarkMode" />
-<MudPopoverProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-<MudLayout>
-    <MudRTLProvider RightToLeft="AppSettings.RightToLeft">
+
+<MudRTLProvider RightToLeft="AppSettings.RightToLeft">
+    <MudPopoverProvider />
+    <MudDialogProvider />
+    <MudSnackbarProvider />
+    <MudLayout>
         <CascadingAuthenticationState>
             <AppBar MenuOnClick="(()=>_NavMenu.DrawerToggle())" />
             <NavMenu @ref="_NavMenu" />
@@ -15,8 +16,8 @@
                 </MudContainer>
             </MudMainContent>
         </CascadingAuthenticationState>
-    </MudRTLProvider>
-</MudLayout>
+    </MudLayout>
+</MudRTLProvider>
 
 
 <div id="blazor-error-ui">

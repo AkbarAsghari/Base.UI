@@ -15,7 +15,7 @@ namespace UI.Providers
         {
             if (!httpResponse.IsSuccessStatusCode)
             {
-                _HttpResponseExceptionHander.HandlerExceptionAsync(httpResponse);
+                await _HttpResponseExceptionHander.HandlerExceptionAsync(httpResponse);
                 return default;
             }
             else
