@@ -2,37 +2,39 @@
 using System.Text;
 using System.Text.Json;
 using UI.DTOs.Providers;
+using UI.Exceptions;
 using UI.Interfaces.Providers;
 
 namespace UI.Providers
 {
-    public class HttpServiceProvider : IHttpServiceProvider
+    public class HttpServiceProvider(HttpClient _HttpClient, HttpResponseExceptionHander _HttpResponseExceptionHander) : IHttpServiceProvider
     {
-        private readonly HttpClient _HttpClient;
-
         string _BaseUrl = AppSettings.APIBaseAddress;
-
-        public HttpServiceProvider(HttpClient httpClient)
-        {
-            _HttpClient = httpClient;
-        }
 
         private async Task<HttpResponseWraper<T?>> GenerateHttpResponseWraper<T>(HttpResponseMessage httpResponse)
         {
-            var responseString = await httpResponse.Content.ReadAsStringAsync();
-
-            T? response;
-            if (typeof(T) == typeof(String))
+            if (!httpResponse.IsSuccessStatusCode)
             {
-                response = (T)(object)responseString;
+                _HttpResponseExceptionHander.HandlerExceptionAsync(httpResponse);
+                return new HttpResponseWraper<T?>(default, false, httpResponse);
             }
+            else
+            {
+                var responseString = await httpResponse.Content.ReadAsStringAsync();
 
-            response = JsonSerializer.Deserialize<T>(responseString,
-                new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                T? response;
+                if (typeof(T) == typeof(String))
+                {
+                    response = (T)(object)responseString;
+                }
 
-            return new HttpResponseWraper<T?>(response,
-                httpResponse.IsSuccessStatusCode,
-                httpResponse);
+                response = JsonSerializer.Deserialize<T>(responseString,
+                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+
+                return new HttpResponseWraper<T?>(response,
+                    httpResponse.IsSuccessStatusCode,
+                    httpResponse);
+            }
         }
 
         public StringContent GenerateStringContentFromObject<T>(T data)
