@@ -62,7 +62,7 @@ namespace UI.Repositories
 
         public async Task<AuthUserDTO?> RegisterAsync(RegisterUserDTO model)
         {
-            return await _HttpServiceProvider.Post<RegisterUserDTO, AuthUserDTO>($"{APIController}/", model);
+            return await _HttpServiceProvider.Post<RegisterUserDTO, AuthUserDTO>($"{APIController}/RegisterAsync", model);
         }
 
         public async Task<bool> ResendConfirmEmailTokenAsync()
