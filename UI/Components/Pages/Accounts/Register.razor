@@ -7,6 +7,7 @@
             <MudText>سلام</MudText>
             <MudText>لطفا ایمیل خود را وارد نمایید</MudText>
             <EditForm Model="_RegisterUserDTO" OnValidSubmit="RegisterUser">
+                <DataAnnotationsValidator />
                 <MudTextField T="string" Placeholder="ایمیل" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.Email" @bind-Value="_RegisterUserDTO.Email"></MudTextField>
                 <MudTextField T="string" InputType="InputType.Password" Placeholder="رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.Password" @bind-Value="_RegisterUserDTO.Password"></MudTextField>
                 <MudTextField T="string" InputType="InputType.Password" Placeholder="تکرار رمز عبور" Variant="Variant.Outlined" Class="my-2 mud-ltr" For="()=>_RegisterUserDTO.ConfirmPassword" @bind-Value="_RegisterUserDTO.ConfirmPassword"></MudTextField>

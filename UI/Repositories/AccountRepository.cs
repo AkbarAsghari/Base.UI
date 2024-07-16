@@ -16,12 +16,12 @@ namespace UI.Repositories
 
         public async Task<bool> ChangeEmailAsync(string email)
         {
-            return await _HttpServiceProvider.Put<string, bool>("", email);
+            return await _HttpServiceProvider.Put<bool>($"{APIController}/ChangeEmailAsync?email={email}");
         }
 
-        public async Task<bool> ChangePasswordAsync(ResetPasswordDTO model)
+        public async Task<bool> ChangePasswordAsync(ChangePasswordDTO model)
         {
-            return await _HttpServiceProvider.Put<ResetPasswordDTO, bool>($"{APIController}/", model);
+            return await _HttpServiceProvider.Put<ChangePasswordDTO, bool>($"{APIController}/ChangePasswordAsync", model);
         }
 
         public Task<bool> ChangeUserRoleAsync(Guid userId, RolesEnum role)
@@ -52,7 +52,7 @@ namespace UI.Repositories
 
         public async Task<UserDTO?> GetCurrentUserAsync()
         {
-            return await _HttpServiceProvider.Get<UserDTO>($"{APIController}/");
+            return await _HttpServiceProvider.Get<UserDTO>($"{APIController}/GetCurrentUserAsync");
         }
 
         public async Task<UserDTO?> GetUserAsync(Guid userId)
@@ -82,7 +82,7 @@ namespace UI.Repositories
 
         public async Task<bool> UpdateUsernameAsync(string? username)
         {
-            return await _HttpServiceProvider.Put<bool>($"{APIController}/");
+            return await _HttpServiceProvider.Put<bool>($"{APIController}/UpdateUsernameAsync?username={username}");
         }
 
         public async Task<int> UsersCountAsync()

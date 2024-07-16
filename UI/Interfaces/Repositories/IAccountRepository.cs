@@ -8,7 +8,7 @@ namespace UI.Interfaces.Repositories
         Task<AuthUserDTO?> AuthenticateAsync(AuthenticateDTO model);
         Task<bool> ForgetPasswordAsync(ForgetPasswordDTO model);
         Task<bool> ResetPasswordAsync(ResetPasswordDTO model);
-        Task<bool> ChangePasswordAsync(ResetPasswordDTO model);
+        Task<bool> ChangePasswordAsync(ChangePasswordDTO model);
         Task<bool> ChangeUserRoleAsync(Guid userId, RolesEnum role);
         Task<AuthUserDTO?> RegisterAsync(RegisterUserDTO model);
         Task<bool> ConfirmEmailWithTokenAsync(string token);

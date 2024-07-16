@@ -4,9 +4,9 @@ namespace UI.DTOs.Repositories.Accounts
 {
     public class ChangePasswordDTO
     {
-        [Required]
+        [Required(ErrorMessage = "رمز عبور جاری را وارد نمایید")]
         public string CurrentPassword { get; set; }
-        [Required]
+        [Required(ErrorMessage = "رمز عبور جدید را وارد نمایید")]
         public string NewPassword { get; set; }
     }
 }
