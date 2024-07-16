@@ -2,7 +2,9 @@ using MudBlazor.Services;
 using UI.Components;
 using UI.Exceptions;
 using UI.Interfaces.Providers;
+using UI.Interfaces.Repositories;
 using UI.Providers;
+using UI.Repositories;
 
 namespace UI
 {
@@ -14,6 +16,8 @@ namespace UI
 
             builder.Services.AddSingleton<HttpResponseExceptionHander>();
             builder.Services.AddScoped<IHttpServiceProvider, HttpServiceProvider>();
+
+            builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 
             // Add MudBlazor services
             builder.Services.AddMudServices();
