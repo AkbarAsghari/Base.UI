@@ -26,5 +26,4 @@ partial class Login
             
         }
     }
-
 }
