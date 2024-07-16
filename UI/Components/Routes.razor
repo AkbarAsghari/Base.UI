@@ -1,6 +1,21 @@
-﻿<Router AppAssembly="typeof(Program).Assembly">
+﻿@inject NavigationManager _NavigationManager
+
+<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="routeData" DefaultLayout="typeof(Layout.MainLayout)" />
-        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+          <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
+            <Authorizing>
+                <text>Please wait, we are authorizing you...</text>
+            </Authorizing>
+            <NotAuthorized>
+                @if (context.User.Identity == null)
+                {
+                    <UI.Components.Pages.Accounts.Login RedirectTo="@_NavigationManager.Uri"></UI.Components.Pages.Accounts.Login>
+                }
+                else if (!context.User.IsInRole("Admin"))
+                {
+                    <MudText>Only system Admins Can See this Page.</MudText>
+                }
+            </NotAuthorized>
+        </AuthorizeRouteView>
     </Found>
 </Router>

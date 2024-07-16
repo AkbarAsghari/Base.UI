@@ -1,3 +1,5 @@
+using DNSLab.Prividers;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using UI.Components;
 using UI.Exceptions;
@@ -18,7 +20,22 @@ namespace UI
             builder.Services.AddHttpClient();
             builder.Services.AddScoped<IHttpServiceProvider, HttpServiceProvider>();
 
+            //Repository
             builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
+
+            builder.Services.AddHttpContextAccessor();
+
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = "CustomScheme";
+                options.DefaultChallengeScheme = "CustomScheme";
+            }).AddScheme<CustomAuthOptions, CustomAuthenticationHandler>("CustomScheme", options => { }); ;
+
+            builder.Services.AddScoped<JWTAuthenticationStateProvider>();
+            builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<JWTAuthenticationStateProvider>());
+            builder.Services.AddScoped<IAuthenticationProvider>(provider => provider.GetRequiredService<JWTAuthenticationStateProvider>());
+
 
             // Add MudBlazor services
             builder.Services.AddMudServices(config =>
