@@ -8,8 +8,8 @@ namespace UI.Repositories
 {
     public class AccountRepository(IHttpServiceProvider _HttpServiceProvider) : IAccountRepository
     {
-        const string APIController = "/Account";
-        public async Task<AuthUserDTO> AuthenticateAsync(AuthenticateDTO model)
+        const string APIController = "Account";
+        public async Task<AuthUserDTO?> AuthenticateAsync(AuthenticateDTO model)
         {
             return await _HttpServiceProvider.Post<AuthenticateDTO, AuthUserDTO>($"{APIController}/AuthenticateAsync", model);
         }
@@ -31,7 +31,7 @@ namespace UI.Repositories
 
         public async Task<bool> ConfirmEmailWithTokenAsync(string token)
         {
-            return await _HttpServiceProvider.Post<string, bool>($"{APIController}/", null);
+            return await _HttpServiceProvider.Post<bool>($"{APIController}/");
         }
 
         public async Task<bool> DeactivateAccountAsync()
@@ -45,29 +45,29 @@ namespace UI.Repositories
             return await _HttpServiceProvider.Post<ForgetPasswordDTO, bool>($"{APIController}/", model);
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllAsync()
+        public async Task<IEnumerable<UserDTO>?> GetAllAsync()
         {
             return await _HttpServiceProvider.Get<IEnumerable<UserDTO>>($"{APIController}/");
         }
 
-        public async Task<UserDTO> GetCurrentUserAsync()
+        public async Task<UserDTO?> GetCurrentUserAsync()
         {
             return await _HttpServiceProvider.Get<UserDTO>($"{APIController}/");
         }
 
-        public async Task<UserDTO> GetUserAsync(Guid userId)
+        public async Task<UserDTO?> GetUserAsync(Guid userId)
         {
             return await _HttpServiceProvider.Get<UserDTO>($"{APIController}/");
         }
 
-        public async Task<AuthUserDTO> RegisterAsync(RegisterUserDTO model)
+        public async Task<AuthUserDTO?> RegisterAsync(RegisterUserDTO model)
         {
             return await _HttpServiceProvider.Post<RegisterUserDTO, AuthUserDTO>($"{APIController}/", model);
         }
 
         public async Task<bool> ResendConfirmEmailTokenAsync()
         {
-            return await _HttpServiceProvider.Post<string, bool>($"{APIController}/", null);
+            return await _HttpServiceProvider.Post<bool>($"{APIController}/");
         }
 
         public async Task<bool> ResetPasswordAsync(ResetPasswordDTO model)
@@ -82,7 +82,7 @@ namespace UI.Repositories
 
         public async Task<bool> UpdateUsernameAsync(string? username)
         {
-            return await _HttpServiceProvider.Put<string, bool>($"{APIController}/", null);
+            return await _HttpServiceProvider.Put<bool>($"{APIController}/");
         }
 
         public async Task<int> UsersCountAsync()

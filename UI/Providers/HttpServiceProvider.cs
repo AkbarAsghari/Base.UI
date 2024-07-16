@@ -54,12 +54,20 @@ namespace UI.Providers
         public async Task<TResponse?> Post<T, TResponse>(string url, T data)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PostAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
+        }
 
+        public async Task<TResponse?> Post<TResponse>(string url)
+        {
+            return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PostAsync(_BaseUrl + url, null));
         }
 
         public async Task<TResponse?> Put<T, TResponse>(string url, T data)
         {
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PutAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
+        }
+        public async Task<TResponse?> Put<TResponse>(string url)
+        {
+            return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PutAsync(_BaseUrl + url, null));
         }
     }
 }
