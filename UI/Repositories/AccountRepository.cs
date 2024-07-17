@@ -19,6 +19,11 @@ namespace UI.Repositories
             return await _HttpServiceProvider.Put<bool>($"{APIController}/ChangeEmailAsync?email={email}");
         }
 
+        public async Task<bool> ChangeMobileAsync(string mobile)
+        {
+            return await _HttpServiceProvider.Put<bool>($"{APIController}/ChangeMobileAsync?mobile={mobile}");
+        }
+
         public async Task<bool> ChangePasswordAsync(ChangePasswordDTO model)
         {
             return await _HttpServiceProvider.Put<ChangePasswordDTO, bool>($"{APIController}/ChangePasswordAsync", model);

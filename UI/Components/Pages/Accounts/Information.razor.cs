@@ -18,9 +18,33 @@ partial class Information
     bool _EditMobileDialogVisible = false;
     void EditMobile()
     {
+        _NewMobile = _CurrentUser!.Mobile;
         _EditMobileDialogVisible = true;
     }
 
+    MudForm _EditMobileForm;
+    string _NewMobile;
+    async Task SaveNewMobile()
+    {
+        await _EditMobileForm.Validate();
+        if (_EditMobileForm.IsValid)
+        {
+            if (_NewMobile.Equals(_CurrentUser!.Mobile))
+            {
+                _NewMobile = String.Empty;
+                _EditMobileDialogVisible = false;
+                return;
+            }
+
+            if (await _AccountRepository.ChangeMobileAsync(_NewMobile))
+            {
+                _CurrentUser!.Mobile = _NewMobile;
+                _NewMobile = String.Empty;
+                _EditMobileDialogVisible = false;
+                _Snackbar.Add("شماره همراه شما با موفقیت تغییر یافت.", Severity.Success);
+            }
+        }
+    }
 
 
     bool _EditPasswordDialogVisible = false;
@@ -28,12 +52,12 @@ partial class Information
     {
         _EditPasswordDialogVisible = true;
     }
-    MudForm _ChangePasswordForm;
+    MudForm _EditPasswordForm;
     ChangePasswordDTO _ChangePasswordDTO = new();
     async Task SaveNewPassword()
     {
-        await _ChangePasswordForm.Validate();
-        if (_ChangePasswordForm.IsValid)
+        await _EditPasswordForm.Validate();
+        if (_EditPasswordForm.IsValid)
         {
             if (await _AccountRepository.ChangePasswordAsync(_ChangePasswordDTO))
             {
