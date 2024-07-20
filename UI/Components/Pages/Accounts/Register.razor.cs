@@ -9,6 +9,7 @@ partial class Register
     [Inject] IAccountRepository _AccountRepository { get; set; }
     [Inject] IAuthenticationProvider _AuthenticationProvider { get; set; }
     [Inject] ISnackbar _Snachbar { get; set; }
+    [Inject] NavigationManager _NavigationManager { get; set; }
 
     RegisterUserDTO _RegisterUserDTO = new();
 
@@ -25,6 +26,7 @@ partial class Register
         if (response != null)
         {
             await _AuthenticationProvider.Login(response.Token);
+            _NavigationManager.NavigateTo("/Dashboard");
         }
     }
 }

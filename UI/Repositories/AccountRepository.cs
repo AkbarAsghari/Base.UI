@@ -52,7 +52,7 @@ namespace UI.Repositories
 
         public async Task<IEnumerable<UserDTO>?> GetAllAsync()
         {
-            return await _HttpServiceProvider.Get<IEnumerable<UserDTO>>($"{APIController}/");
+            return await _HttpServiceProvider.Get<IEnumerable<UserDTO>>($"{APIController}/GetAllAsync");
         }
 
         public async Task<UserDTO?> GetCurrentUserAsync()

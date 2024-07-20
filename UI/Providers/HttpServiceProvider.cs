@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Text;
 using System.Text.Json;
+using UI.AppSettings;
 using UI.DTOs.Providers;
 using UI.Exceptions;
 using UI.Interfaces.Providers;
@@ -9,7 +10,7 @@ namespace UI.Providers
 {
     public class HttpServiceProvider(HttpClient _HttpClient, HttpResponseExceptionHander _HttpResponseExceptionHander) : IHttpServiceProvider
     {
-        string _BaseUrl = AppSettings.APIBaseAddress;
+        string _BaseUrl = GlobalSettings.APIBaseAddress;
 
         private async Task<T?> GenerateHttpResponseWraper<T>(HttpResponseMessage httpResponse)
         {

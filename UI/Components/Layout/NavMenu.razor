@@ -6,6 +6,12 @@
                 <MudNavLink Href="counter" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Add">Counter</MudNavLink>
                 <MudNavLink Href="weather" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Weather</MudNavLink>
                 <MudNavGroup Title="حساب کاربری" Icon="@Icons.Material.Filled.AccountBox">
+                    <AuthorizeView Roles="@AuthorizeRoles.Admin" Context="_AdminCTX">
+                        <Authorized>
+                            <MudNavLink Href="/Accounts/All">لیست کاربران</MudNavLink>
+                            <MudDivider />
+                        </Authorized>
+                    </AuthorizeView>
                     <MudNavLink Href="/Accounts/information">اطلاعات حساب کاربری</MudNavLink>
                     <MudNavLink Href="/Accounts/SignOut">خروج</MudNavLink>
                 </MudNavGroup>

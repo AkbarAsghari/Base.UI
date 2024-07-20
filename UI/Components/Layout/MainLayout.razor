@@ -1,8 +1,8 @@
 ﻿@inherits LayoutComponentBase
 
-<MudThemeProvider Theme="@_theme" IsDarkMode="AppSettings.DarkMode" />
+<MudThemeProvider Theme="@_theme" IsDarkMode="GlobalSettings.DarkMode" />
 
-<MudRTLProvider RightToLeft="AppSettings.RightToLeft">
+<MudRTLProvider RightToLeft="GlobalSettings.RightToLeft">
     <MudPopoverProvider />
     <MudDialogProvider />
     <MudSnackbarProvider />
