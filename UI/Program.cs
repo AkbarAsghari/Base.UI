@@ -1,10 +1,12 @@
 using DNSLab.Prividers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 using UI.Components;
 using UI.Exceptions;
 using UI.Interfaces.Providers;
 using UI.Interfaces.Repositories;
+using UI.Middlewares;
 using UI.Providers;
 using UI.Repositories;
 
@@ -26,11 +28,7 @@ namespace UI
 
             builder.Services.AddHttpContextAccessor();
 
-            builder.Services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = "CustomScheme";
-                options.DefaultChallengeScheme = "CustomScheme";
-            }).AddScheme<CustomAuthOptions, CustomAuthenticationHandler>("CustomScheme", options => { }); ;
+            builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, BlazorAuthorizationMiddlewareResultHandler>();
 
             builder.Services.AddScoped<JWTAuthenticationStateProvider>();
             builder.Services.AddScoped<AuthenticationStateProvider>(provider => provider.GetRequiredService<JWTAuthenticationStateProvider>());
