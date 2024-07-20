@@ -14,10 +14,12 @@ partial class Login
 
     [Parameter]
     [SupplyParameterFromQuery]
-    public string? RedirectTo { get; set; }
+    public string RedirectTo { get; set; }
     protected override void OnInitialized()
     {
-        if (!String.IsNullOrWhiteSpace(RedirectTo) && !RedirectTo.ToLower().EndsWith("dashboard"))
+        RedirectTo = _NavigationManager.Uri.Substring(_NavigationManager.BaseUri.Length).ToLower();
+
+        if (!RedirectTo.ToLower().EndsWith("login"))
             _Snackbar.Add("برای ادامه ابتدا باید وارد شوید", Severity.Info);
     }
 
@@ -30,7 +32,7 @@ partial class Login
         if (response != null)
         {
             await _AuthenticationProvider.Login(response.Token);
-            if (String.IsNullOrEmpty(RedirectTo))
+            if (RedirectTo.ToLower().EndsWith("login"))
             {
                 _NavigationManager.NavigateTo("/Dashboard");
             }

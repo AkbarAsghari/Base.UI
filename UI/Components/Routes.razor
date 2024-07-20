@@ -1,6 +1,4 @@
-﻿@inject NavigationManager _NavigationManager
-
-<Router AppAssembly="typeof(Program).Assembly">
+﻿<Router AppAssembly="typeof(Program).Assembly">
     <Found Context="routeData">
           <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.MainLayout)">
             <Authorizing>
@@ -9,7 +7,7 @@
             <NotAuthorized>
                 @if (context.User.Identity == null)
                 {
-                    <UI.Components.Pages.Accounts.Login RedirectTo="@_NavigationManager.Uri"></UI.Components.Pages.Accounts.Login>
+                    <UI.Components.Pages.Accounts.Login />
                 }
                 else if (!context.User.IsInRole("Admin"))
                 {
