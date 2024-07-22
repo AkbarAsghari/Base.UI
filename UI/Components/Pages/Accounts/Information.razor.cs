@@ -14,6 +14,22 @@ partial class Information
         _CurrentUser = await _AccountRepository.GetCurrentUserAsync();
     }
 
+    async Task SaveInformation()
+    {
+        if (_CurrentUser != null)
+        {
+            if (await _AccountRepository.UpdateAsync(new UpdateUserPersonalInfoDTO
+            {
+                Company = _CurrentUser.Company,
+                FirstName = _CurrentUser.FirstName,
+                LastName = _CurrentUser.LastName,
+            }))
+            {
+                _Snackbar.Add("اطلاعات با موفقیت ذخیره شد", Severity.Success);
+            }
+        }
+    }
+
 
     bool _EditMobileDialogVisible = false;
     void EditMobile()
@@ -109,8 +125,8 @@ partial class Information
     {
         if (_NewUsername!.Equals(_CurrentUser!.Username))
         {
-            _NewEmailAddress = String.Empty;
-            _EditEmailDialogVisible = false;
+            _NewUsername = String.Empty;
+            _EditUsernameDialogVisible = false;
             return;
         }
 

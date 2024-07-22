@@ -82,7 +82,7 @@ namespace UI.Repositories
 
         public async Task<bool> UpdateAsync(UpdateUserPersonalInfoDTO model)
         {
-            return await _HttpServiceProvider.Put<UpdateUserPersonalInfoDTO, bool>($"{APIController}/", model);
+            return await _HttpServiceProvider.Put<UpdateUserPersonalInfoDTO, bool>($"{APIController}/UpdateAsync", model);
         }
 
         public async Task<bool> UpdateUsernameAsync(string? username)
