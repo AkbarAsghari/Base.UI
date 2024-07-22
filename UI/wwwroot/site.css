@@ -14,3 +14,7 @@
     src: url(../fonts/Vazir-Regular.woff);
     font-weight: 400
 }
+
+.baackdrop-bluered {
+    backdrop-filter: blur(2px) !important
+}
