@@ -28,9 +28,11 @@ namespace UI.Providers
                 {
                     response = (T)(object)responseString;
                 }
-
-                response = JsonSerializer.Deserialize<T>(responseString,
-                    new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                else
+                {
+                    response = JsonSerializer.Deserialize<T>(responseString,
+                        new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+                }
 
                 return response;
             }
