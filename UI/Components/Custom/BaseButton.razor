@@ -2,7 +2,13 @@
 
 @if (base.Disabled)
 {
-    <MudButton Disabled Variant="base.Variant" Class="@base.Class" ButtonType="base.ButtonType" FullWidth="base.FullWidth">
+    <MudButton Disabled Variant="base.Variant"
+               Style="@base.Style"
+               StartIcon="@base.StartIcon"
+               EndIcon="@base.EndIcon"
+               Class="@base.Class"
+               ButtonType="base.ButtonType"
+               FullWidth="base.FullWidth">
         @_ProcessingRenderFragment
     </MudButton>
 }
