@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text.Json;
 using UI.Interfaces.Providers;
 
-namespace DNSLab.Prividers
+namespace UI.Providers
 {
     public class JWTAuthenticationStateProvider : AuthenticationStateProvider, IAuthenticationProvider
     {
