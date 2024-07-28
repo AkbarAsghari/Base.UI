@@ -4,7 +4,12 @@
             <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="MenuOnClick" />
         </Authorized>
     </AuthorizeView>
-    <MudText Typo="Typo.h5" Class="ml-3">@GlobalSettings.ApplicationName</MudText>
+    <MudHidden Invert Breakpoint="Breakpoint.Xs">
+        <MudText>@GlobalSettings.ApplicationName</MudText>
+    </MudHidden>
+    <MudHidden Breakpoint="Breakpoint.Xs">
+        <MudText Typo="Typo.h5" Class="ml-3">@GlobalSettings.ApplicationName</MudText>
+    </MudHidden>
     <MudSpacer />
     <AuthorizeView>
         <NotAuthorized>
