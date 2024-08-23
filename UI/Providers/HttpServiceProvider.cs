@@ -40,7 +40,7 @@ namespace UI.Providers
             }
         }
 
-        async Task SetClientAuthorization()
+        public async Task CheckTokenAsync()
         {
             var token = await _TokenProvider.GetTokenAsync();
             if (String.IsNullOrEmpty(token))
@@ -71,37 +71,37 @@ namespace UI.Providers
 
         public async Task<TResponse?> Delete<TResponse>(string url)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.DeleteAsync(_BaseUrl + url));
         }
 
         public async Task<TResponse?> Get<TResponse>(string url)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.GetAsync(_BaseUrl + url));
 
         }
 
         public async Task<TResponse?> Post<T, TResponse>(string url, T data)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PostAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
         }
 
         public async Task<TResponse?> Post<TResponse>(string url)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PostAsync(_BaseUrl + url, null));
         }
 
         public async Task<TResponse?> Put<T, TResponse>(string url, T data)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PutAsync(_BaseUrl + url, GenerateStringContentFromObject(data)));
         }
         public async Task<TResponse?> Put<TResponse>(string url)
         {
-            await SetClientAuthorization();
+            await CheckTokenAsync();
             return await GenerateHttpResponseWraper<TResponse>(await _HttpClient.PutAsync(_BaseUrl + url, null));
         }
     }

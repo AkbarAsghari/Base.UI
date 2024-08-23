@@ -13,12 +13,12 @@ namespace UI.Providers
         private AuthenticationState Anonymouse =>
             new AuthenticationState(new ClaimsPrincipal());
 
-        private readonly HttpClient HttpClient;
+        private readonly IHttpServiceProvider _ServiceProvider;
         private readonly IAccountRepository _AccountRepository;
         private readonly ITokenProvider _TokenProvider;
-        public JWTAuthenticationStateProvider(HttpClient httpClient, IAccountRepository accountRepository, ITokenProvider tokenProvider)
+        public JWTAuthenticationStateProvider(IAccountRepository accountRepository, ITokenProvider tokenProvider, IHttpServiceProvider serviceProvider)
         {
-            this.HttpClient = httpClient;
+            _ServiceProvider = serviceProvider;
             _AccountRepository = accountRepository;
             _TokenProvider = tokenProvider;
         }
@@ -27,8 +27,8 @@ namespace UI.Providers
         {
             try
             {
+                await _ServiceProvider.CheckTokenAsync();
                 var token = await _TokenProvider.GetTokenAsync();
-
                 if (!String.IsNullOrEmpty(token))
                 {
                     return BuildAuthenticationState(token);
@@ -41,8 +41,6 @@ namespace UI.Providers
 
         public AuthenticationState BuildAuthenticationState(string token)
         {
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
-
             var claims = ParsClaimsFromJWT(token);
 
             // Checks the exp field of the token
@@ -122,7 +120,6 @@ namespace UI.Providers
             try
             {
                 await _TokenProvider.DeleteTokenAsync();
-                HttpClient.DefaultRequestHeaders.Authorization = null;
                 NotifyAuthenticationStateChanged(Task.FromResult(Anonymouse));
             }
             catch { }

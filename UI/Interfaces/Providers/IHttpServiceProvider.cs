@@ -4,6 +4,7 @@ namespace UI.Interfaces.Providers
 {
     public interface IHttpServiceProvider
     {
+        Task CheckTokenAsync();
         Task<TResponse?> Get<TResponse>(string url);
         Task<TResponse?> Post<T, TResponse>(string url, T data);
         Task<TResponse?> Post<TResponse>(string url);
