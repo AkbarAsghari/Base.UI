@@ -4,34 +4,35 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Text.Json;
 using UI.Interfaces.Providers;
+using UI.Interfaces.Repositories;
 
 namespace UI.Providers
 {
     public class JWTAuthenticationStateProvider : AuthenticationStateProvider, IAuthenticationProvider
     {
-        private readonly ProtectedLocalStorage localStorage;
-
-        private readonly string TokenKey = "TOKENKEY";
         private AuthenticationState Anonymouse =>
             new AuthenticationState(new ClaimsPrincipal());
 
         private readonly HttpClient HttpClient;
-
-        public JWTAuthenticationStateProvider(ProtectedLocalStorage localStorage, HttpClient httpClient)
+        private readonly IAccountRepository _AccountRepository;
+        private readonly ITokenProvider _TokenProvider;
+        public JWTAuthenticationStateProvider(HttpClient httpClient, IAccountRepository accountRepository, ITokenProvider tokenProvider)
         {
-            this.localStorage = localStorage;
             this.HttpClient = httpClient;
+            _AccountRepository = accountRepository;
+            _TokenProvider = tokenProvider;
         }
 
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             try
             {
-                var token = await localStorage.GetAsync<string>(TokenKey);
+                var token = await _TokenProvider.GetTokenAsync();
 
-                if (token.Success)
-                    if (!String.IsNullOrEmpty(token.Value))
-                        return BuildAuthenticationState(token.Value);
+                if (!String.IsNullOrEmpty(token))
+                {
+                    return BuildAuthenticationState(token);
+                }
             }
             catch (Exception ex) { }
 
@@ -105,12 +106,12 @@ namespace UI.Providers
             return Convert.FromBase64String(converted);
         }
 
-        public async Task Login(string token)
+        public async Task Login(AuthUserDTO model)
         {
             try
             {
-                await localStorage.SetAsync(TokenKey, token);
-                var authState = BuildAuthenticationState(token);
+                await _TokenProvider.SetTokenAsync(model);
+                var authState = BuildAuthenticationState(model.Token);
                 NotifyAuthenticationStateChanged(Task.FromResult(authState));
             }
             catch { }
@@ -120,7 +121,7 @@ namespace UI.Providers
         {
             try
             {
-                await localStorage.DeleteAsync(TokenKey);
+                await _TokenProvider.DeleteTokenAsync();
                 HttpClient.DefaultRequestHeaders.Authorization = null;
                 NotifyAuthenticationStateChanged(Task.FromResult(Anonymouse));
             }

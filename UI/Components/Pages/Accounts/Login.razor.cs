@@ -31,7 +31,7 @@ partial class Login
 
         if (response != null)
         {
-            await _AuthenticationProvider.Login(response.Token);
+            await _AuthenticationProvider.Login(response);
             if (RedirectTo.ToLower().EndsWith("login"))
             {
                 _NavigationManager.NavigateTo("/Dashboard");

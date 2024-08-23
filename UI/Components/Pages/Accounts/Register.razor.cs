@@ -25,7 +25,7 @@ partial class Register
 
         if (response != null)
         {
-            await _AuthenticationProvider.Login(response.Token);
+            await _AuthenticationProvider.Login(response);
             _NavigationManager.NavigateTo("/Dashboard");
         }
     }

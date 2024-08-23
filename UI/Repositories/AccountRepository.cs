@@ -14,6 +14,11 @@ namespace UI.Repositories
             return await _HttpServiceProvider.Post<AuthenticateDTO, AuthUserDTO>($"{APIController}/AuthenticateAsync", model);
         }
 
+        public async Task<AuthUserDTO?> GenerateTokenWithRefreshTokenAsync(AuthUserDTO model)
+        {
+            return await _HttpServiceProvider.Post<AuthUserDTO, AuthUserDTO>($"{APIController}/GenerateTokenWithRefreshTokenAsync", model);
+        }
+
         public async Task<bool> ChangeEmailAsync(string email)
         {
             return await _HttpServiceProvider.Put<bool>($"{APIController}/ChangeEmailAsync?email={email}");

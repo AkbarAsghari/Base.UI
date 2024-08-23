@@ -6,6 +6,7 @@ namespace UI.Interfaces.Repositories
     public interface IAccountRepository
     {
         Task<AuthUserDTO?> AuthenticateAsync(AuthenticateDTO model);
+        Task<AuthUserDTO?> GenerateTokenWithRefreshTokenAsync(AuthUserDTO model);
         Task<bool> ForgetPasswordAsync(ForgetPasswordDTO model);
         Task<bool> ResetPasswordAsync(ResetPasswordDTO model);
         Task<bool> ChangePasswordAsync(ChangePasswordDTO model);

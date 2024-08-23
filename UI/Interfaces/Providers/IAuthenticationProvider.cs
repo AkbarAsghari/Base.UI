@@ -2,7 +2,7 @@
 {
     public interface IAuthenticationProvider
     {
-        Task Login(string token);
+        Task Login(AuthUserDTO model);
         Task Logout();
     }
 }
