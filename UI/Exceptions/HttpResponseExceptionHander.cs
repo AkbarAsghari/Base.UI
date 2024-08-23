@@ -28,7 +28,7 @@ namespace UI.Exceptions
                     case HttpStatusCode.TooManyRequests:
                         break;
                     case HttpStatusCode.Unauthorized:
-                        _NavigationManager.NavigateTo($"/Accounts/Login");
+                        _NavigationManager.NavigateTo($"/Accounts/Login", true);
                         break;
                     case HttpStatusCode.NotFound:
                         _NavigationManager.NavigateTo("/Errors/404", true);

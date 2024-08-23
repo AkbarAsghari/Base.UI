@@ -58,6 +58,10 @@ namespace UI.Providers
                         await _TokenProvider.SetTokenAsync(newToken);
                         token = newToken.Token;
                     }
+                    else
+                    {
+                        await _TokenProvider.DeleteTokenAsync();
+                    }
                 }
             }
 
