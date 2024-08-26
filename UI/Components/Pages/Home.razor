@@ -1,58 +1,108 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Index</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">Hello, world!</MudText>
-<MudText Class="mb-8">Welcome to your new app, powered by MudBlazor and the .NET 8 Template!</MudText>
 
-<MudAlert Severity="Severity.Normal">
-    You can find documentation and examples on our website here:
-    <MudLink Href="https://mudblazor.com" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        <b>www.mudblazor.com</b>
-    </MudLink>
-</MudAlert>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">Interactivity in this Template</MudText>
-<br />
-<MudText Typo="Typo.body2">
-    When you opt for the "Global" Interactivity Location, <br />
-    the render modes are defined in App.razor and consequently apply to all child components.<br />
-    In this case, providers are globally set in the MainLayout.<br />
-    <br />
-    On the other hand, if you choose the "Per page/component" Interactivity Location,<br />
-    it is necessary to include the <br />
-    <br />
-    &lt;MudPopoverProvider /&gt; <br />
-    &lt;MudDialogProvider /&gt; <br />
-    &lt;MudSnackbarProvider /&gt; <br />
-    <br />
-    components on every interactive page.<br />
-    <br />
-    If a render mode is not specified for a page, it defaults to Server-Side Rendering (SSR),<br />
-    similar to this page. While MudBlazor allows pages to be rendered in SSR,<br />
-    please note that interactive features, such as buttons and dropdown menus, will not be functional.
-</MudText>
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-16">
+   @*  <MudStack Row Class="mb-2">
+        @foreach (var item in new int[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 })
+        {
+            <MudButton OnClick="(()=> ChangeMonth(item))" Variant="Variant.Filled" Color="Color.Success">@MD.PersianDateTime.Standard.PersianDateTime.GetPersianMonthName(item)</MudButton>
+        }
+    </MudStack> *@
+    <MudGrid Spacing="1">
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">شنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">یکشنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">دوشنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">سه‌شنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">چهار‌شنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">پنجشنبه</MudText></MudItem>
+        <MudItem Style="@("width:"+ (100/7) + "%")"><MudText Align="Align.Center">جمعه</MudText></MudItem>
+        <MudItem xs="12">
+            <MudDropContainer T="EventItem" Items="_Events" ItemsSelector="@((item,dropzone) => item.Day == int.Parse(dropzone))" ItemDropped="ItemUpdated">
+                <ChildContent>
+                    <MudGrid Spacing="0">
+                        @foreach (var day in _Days)
+                        {
+                            <MudItem Style="@("width:"+ (100/7) + "%;")">
+                                @if (day != default)
+                                {
+                                    <MudPaper Outlined Elevation="0" Square>
+                                        <MudDropZone T="EventItem" Identifier="@day.ToString()" Style="height:100px;max-height:100px" Class="pa-1 overflow-x-auto">
+                                            <MudText Typo="Typo.caption">@day </MudText>
 
-<br />
-<MudText Typo="Typo.h5" GutterBottom="true">What's New in Blazor with the Release of .NET 8</MudText>
-<br />
-<MudText Typo="Typo.h6" GutterBottom="true">Prerendering</MudText>
-<MudText Typo="Typo.body2" GutterBottom="true">
-    If you're exploring the features of .NET 8 Blazor,<br /> you might be pleasantly surprised to learn that each page is prerendered on the server,<br /> regardless of the selected render mode.<br /><br />
-    This means that you'll need to inject all necessary services on the server,<br /> even when opting for the wasm (WebAssembly) render mode.<br /><br />
-    This prerendering functionality is crucial to ensuring that WebAssembly mode feels fast and responsive,<br /> especially when it comes to initial page load times.<br /><br />
-    For more information on how to detect prerendering and leverage the RenderContext, you can refer to the following link:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issuecomment-1783568121" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                                        </MudDropZone>
+                                    </MudPaper>
+                                }
+                                else
+                                {
 
-<br />
-<MudText Typo="Typo.h6" GutterBottom="true">InteractiveAuto</MudText>
-<MudText Typo="Typo.body2">
-    A discussion on how to achieve this can be found here:
-    <MudLink Href="https://github.com/dotnet/aspnetcore/issues/51468#issue-1950424116" Target="_blank" Typo="Typo.body2" Color="Color.Primary">
-        More details
-    </MudLink>
-</MudText>
+                                }
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </ChildContent>
+                <ItemRenderer>
+                    <MudChip T="object" Label="true" Size="Size.Small" Color="Color.Info" OnClick="(()=>OpenEvent(context))">
+                        <MudText Typo="Typo.caption">@context.Event</MudText>
+                    </MudChip>
+                </ItemRenderer>
+            </MudDropContainer>
+        </MudItem>
+    </MudGrid>
+</MudContainer>
+
+
+@code {
+    [Inject] public ISnackbar Snackbar { get; set; }
+
+    int[] _Days = new int[35];
+
+    private void ItemUpdated(MudItemDropInfo<EventItem> dropItem)
+    {
+        dropItem.Item.Day = int.Parse(dropItem.DropzoneIdentifier);
+    }
+
+    class EventItem
+    {
+        public int Day { get; set; }
+        public string Event { get; set; }
+    }
+
+    List<EventItem> _Events = new List<EventItem>
+    {
+       new EventItem { Day = 7 , Event = "Event 1"},
+       new EventItem { Day = 23 , Event = "Event 1"},
+       new EventItem { Day = 24 , Event = "Event 2"},
+       new EventItem { Day = 11 , Event = "Event 3"},
+       new EventItem { Day = 11 , Event = "Event 4"},
+    };
+
+    async Task OpenEvent(EventItem @event)
+    {
+        Snackbar.Add(@event.Event);
+    }
+
+    protected override void OnInitialized()
+    {
+        ChangeMonth(MD.PersianDateTime.Standard.PersianDateTime.Today.Month);
+    }
+
+    public void ChangeMonth(int month)
+    {
+        _Days = new int[35];
+        int startJump = (int)new MD.PersianDateTime.Standard.PersianDateTime(1403, month, 01).DayOfWeek;
+        @for (int i = 1; i <= new
+MD.PersianDateTime.Standard.PersianDateTime(1403, month, 01).GetMonthDays; i++)
+        {
+            int index = startJump + i;
+            if (index >= _Days.Length)
+            {
+                index = index - _Days.Length;
+            }
+            _Days[index] = i;
+        }
+    }
+
+}
