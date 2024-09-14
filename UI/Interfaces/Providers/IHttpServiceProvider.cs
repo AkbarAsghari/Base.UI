@@ -1,6 +1,4 @@
-﻿using UI.DTOs.Providers;
-
-namespace UI.Interfaces.Providers
+﻿namespace UI.Interfaces.Providers
 {
     public interface IHttpServiceProvider
     {

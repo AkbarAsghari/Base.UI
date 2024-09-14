@@ -5,7 +5,7 @@ public sealed class GlobalSettings
     public const string ApplicationName = "My Application";
     public const bool RightToLeft = true;
     public const bool DarkMode = false;
-    public const string APIBaseAddress = "https://localhost:7087/";
+    public const string APIBaseAddress = "https://localhost:7010/";
 }
 
 public sealed class AuthorizeRoles
