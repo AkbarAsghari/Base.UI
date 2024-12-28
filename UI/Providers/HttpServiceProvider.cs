@@ -29,6 +29,11 @@ namespace UI.Providers
                 }
                 else
                 {
+                    if (String.IsNullOrEmpty(responseString))
+                    {
+                        return default;
+                    }
+
                     response = JsonSerializer.Deserialize<T>(responseString,
                         new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
                 }

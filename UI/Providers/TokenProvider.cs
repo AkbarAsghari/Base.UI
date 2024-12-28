@@ -13,34 +13,43 @@ namespace UI.Providers
 
         public async Task<string> GetRefreshTokenAsync()
         {
-            var model = await _LocalStorage.GetAsync<AuthUserDTO>(TokenKey);
-
-            if (model.Success)
+            try
             {
-                if (model.Value!.RefreshTokenExpiryTime > DateTime.UtcNow)
+                var model = await _LocalStorage.GetAsync<AuthUserDTO>(TokenKey);
+
+                if (model.Success)
                 {
-                    return model.Value.RefreshToken;
+                    if (model.Value!.RefreshTokenExpiryTime > DateTime.UtcNow)
+                    {
+                        return model.Value.RefreshToken;
+                    }
                 }
+
             }
+            catch { }
 
             return String.Empty;
         }
 
         public async Task<string> GetTokenAsync()
         {
-            var model = await _LocalStorage.GetAsync<AuthUserDTO>(TokenKey);
-
-            if (model.Success)
+            try
             {
-                if (!String.IsNullOrEmpty(model.Value!.Token))
-                {
-                    if (model.Value!.TokenExpiryTime > DateTime.UtcNow)
-                    {
-                        return model.Value.Token;
-                    }
+                var model = await _LocalStorage.GetAsync<AuthUserDTO>(TokenKey);
 
+                if (model.Success)
+                {
+                    if (!String.IsNullOrEmpty(model.Value!.Token))
+                    {
+                        if (model.Value!.TokenExpiryTime > DateTime.UtcNow)
+                        {
+                            return model.Value.Token;
+                        }
+
+                    }
                 }
             }
+            catch { }
 
             return String.Empty;
         }
